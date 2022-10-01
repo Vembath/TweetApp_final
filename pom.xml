@@ -111,5 +111,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>tweetapp</finalName>
     </build>
 </project>
