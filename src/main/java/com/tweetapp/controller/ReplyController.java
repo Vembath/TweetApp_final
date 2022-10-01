@@ -1,7 +1,7 @@
-/*package com.tweetapp.controller;
+package com.tweetapp.controller;
 
 import com.tweetapp.exception.TweetNotFoundException;
-import com.tweetapp.kafka.producer.TweetProducer;
+//import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.ReplyEntity;
 import com.tweetapp.service.ReplyService;
 import com.tweetapp.service.TweetService;
@@ -26,14 +26,14 @@ public class ReplyController {
 	@Autowired
 	ReplyService replyService;
 
-	@Autowired
-	TweetProducer tweetProducer;
+	//@Autowired
+	//TweetProducer tweetProducer;
 
 	@PostMapping(path = "/{username}/reply/{id}")
-	public ResponseEntity<ReplyEntity> postReply(@PathVariable String username, @PathVariable long id,
+	public ResponseEntity<ReplyEntity> postReply(@PathVariable String username, @PathVariable String id,
 	                                             @RequestParam String body) {
 		isValidTweet(body);
-		tweetProducer.sendMessage("[kafka]post reply request to the tweet id -> " + id + " initiated");
+		//tweetProducer.sendMessage("[kafka]post reply request to the tweet id -> " + id + " initiated");
 			return new ResponseEntity<>
 					(replyService.postReply(new ReplyEntity(id,username,body)), HttpStatus.CREATED);
 //		return new ResponseEntity<>
@@ -45,4 +45,4 @@ public class ReplyController {
 			throw new TweetNotFoundException("Invalid Tweet Content");
 		}
 	}
-}*/
+}

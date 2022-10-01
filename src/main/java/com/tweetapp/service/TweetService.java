@@ -27,10 +27,6 @@ public class TweetService {
 
 	public List<TweetEntity> findAllTweets() {
 		List<TweetEntity> tweets = repo.findAll();
-		if (tweets.isEmpty()) {
-			log.error("No tweet present at this moment");
-			throw new TweetNotFoundException("No tweet present at this moment");
-		}
 		return tweets;
 	}
 
@@ -40,16 +36,20 @@ public class TweetService {
 				//.stream()
 				//.map(TweetMapper::toTweetResponse)
 				//.collect(Collectors.toList());
-		//return tw
+
+		return repo.findTweetByEmail(email).stream()
+		.map(TweetMapper::toTweetResponse)
+		.collect(Collectors.toList());
+
 	}
 
 	/*public TweetEntity findTweetsByUserAndId(String email, long id) {
 		return repo.findByEmailAndId(email, id);
-	}
-
-	public TweetEntity findTweetById(long id) {
-		return repo.findTweetById(id).orElse(null);
 	}*/
+
+	public TweetEntity findTweetById(String id) {
+		return repo.findTweetById(id).orElse(null);
+	}
 
 	// Add validation for check if user exists
 	public TweetResponse createTweet(TweetEntity tweet) {

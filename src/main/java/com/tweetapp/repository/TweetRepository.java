@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends MongoRepository<TweetEntity, String> {
-	Optional<TweetEntity> findTweetByEmail(String email);
+	List<TweetEntity> findTweetByEmail(String email);
 	Optional<TweetEntity> findTweetById(String id);
 
     @Query("{ 'email' : ?0,'id' : ?1 }")

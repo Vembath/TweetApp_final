@@ -1,4 +1,4 @@
-package com.tweetapp.kafka.producer;
+/*package com.tweetapp.kafka.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,4 +23,4 @@ public class TweetProducer {
 		this.kafkaTemplate.send(TOPIC, msg);
 
 	}
-}
+}*/

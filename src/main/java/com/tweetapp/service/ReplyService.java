@@ -1,14 +1,16 @@
-/*package com.tweetapp.service;
+package com.tweetapp.service;
 
 import com.tweetapp.exception.TweetNotFoundException;
 import com.tweetapp.model.ReplyEntity;
 import com.tweetapp.model.TweetEntity;
 import com.tweetapp.repository.ReplyRepository;
+import com.tweetapp.repository.TweetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +21,10 @@ public class ReplyService {
 	TweetService tweetService;
 	@Autowired
 	private ReplyRepository repo;
+	@Autowired
+	private TweetRepository tweetRepository;
 
-	public List<ReplyEntity> getRepliesByTweetId(long tweetId) {
+	public List<ReplyEntity> getRepliesByTweetId(String tweetId) {
 		return tweetService
 				.findTweetById(tweetId)
 				.getReplies()
@@ -29,22 +33,18 @@ public class ReplyService {
 	}
 
 	public ReplyEntity postReply(ReplyEntity reply) {
-//		TweetEntity tweet = tweetService.findTweetById(reply.getId());
+		TweetEntity tweet = tweetService.findTweetById(reply.getId());
 
-//  	if (tweet != null) {
-//			log.info("Reply created -> " + reply.toString());
-//			repo.save(reply);
-//			return reply;
-//		} else {
-//			log.info(tweet.toString());
-//			throw new TweetNotFoundException("Tweet Not found to register reply");
-//		}
+  	if (tweet != null) {
 		log.info("Reply created -> " + reply.toString());
 		repo.save(reply);
+		tweet.setReplies(Arrays.asList(reply));
+		tweetRepository.save(tweet);
 		return reply;
+	} else {
+  	    log.info(tweet.toString());
+  	    throw new TweetNotFoundException("Tweet Not found to register reply");
+  	}
 	}
 
-	// add likes for reply
-
 }
-*/

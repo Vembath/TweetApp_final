@@ -17,13 +17,13 @@ public class ReplyEntity {
 	@Id
 	//@GeneratedValue
 	//@Column(name = "reply_id")
-	private long replyId;
+	private String replyId;
 
 //	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 //	@JoinColumn(name = "id", nullable = true)
 //	private TweetEntity tweet;
 	//@Column(nullable = true)
-	private long id;
+	private String id;
 	private String body;
 	private String email;
 	private int likes = 0;
@@ -31,7 +31,7 @@ public class ReplyEntity {
 
 //	public ReplyEntity(String email, String body, TweetEntity tweet) {
 //		this.tweet = tweet;
-	public ReplyEntity(long id, String email, String body) {
+	public ReplyEntity(String id, String email, String body) {
 		this.id = id;
 		this.email = email;
 		this.body = body;

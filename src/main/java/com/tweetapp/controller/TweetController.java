@@ -1,7 +1,7 @@
 package com.tweetapp.controller;
 
 import com.tweetapp.exception.TweetNotFoundException;
-import com.tweetapp.kafka.producer.TweetProducer;
+//import com.tweetapp.kafka.producer.TweetProducer;
 import com.tweetapp.model.TweetEntity;
 import com.tweetapp.model.dto.response.TweetResponse;
 import com.tweetapp.service.TweetService;
@@ -25,18 +25,18 @@ public class TweetController {
 	@Autowired
 	UserService userService;
 
-	@Autowired
-	TweetProducer tweetProducer;
+	//@Autowired
+	//TweetProducer tweetProducer;
 
 	@GetMapping(path = "/all")
 	public ResponseEntity<List<TweetEntity>> findAllTweets() {
-		tweetProducer.sendMessage("[kafka]Find All tweets");
+		//tweetProducer.sendMessage("[kafka]Find All tweets");
 		return new ResponseEntity<>(service.findAllTweets(), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/{userName}")
 	public ResponseEntity<List<TweetResponse>> findTweetsByEmailId(@PathVariable String userName) {
-		tweetProducer.sendMessage("[kafka]Find tweets by user request -> " + userName);
+		//tweetProducer.sendMessage("[kafka]Find tweets by user request -> " + userName);
 		return new ResponseEntity<>(service.getTweetsByUser(userName), HttpStatus.OK);
 	}
 
@@ -45,7 +45,7 @@ public class TweetController {
 			(@PathVariable String username, @RequestParam String body) {
 		userService.isUserLoggedIn(username);
 		isValidTweet(body);
-		tweetProducer.sendMessage("[kafka]Post Tweet request initiatiated");
+		//tweetProducer.sendMessage("[kafka]Post Tweet request initiatiated");
 		return new ResponseEntity<>(service.createTweet(new TweetEntity(username, body)),
 				HttpStatus.CREATED);
 	}
@@ -56,7 +56,7 @@ public class TweetController {
 	                                                  @RequestParam String body) {
 		userService.isUserLoggedIn(username);
 		isValidTweet(body);
-		tweetProducer.sendMessage("[kafka]Update tweet request initiatiated for tweet id -> " + id);
+		//tweetProducer.sendMessage("[kafka]Update tweet request initiatiated for tweet id -> " + id);
 		return new ResponseEntity<>(service.updateTweet(id, body), HttpStatus.OK);
 	}
 
@@ -64,14 +64,14 @@ public class TweetController {
 	public ResponseEntity<TweetEntity> likeTweet(@PathVariable String username, @PathVariable String id) {
 //		userService.isUserLoggedIn(username); //can be used while editing
 		validateTweetId(id);
-		tweetProducer.sendMessage("[kafka]liked tweet -> " + id);
+		//tweetProducer.sendMessage("[kafka]liked tweet -> " + id);
 		return new ResponseEntity<>(service.likeTweet(username, id), HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/{username}/delete/{id}")
 	public ResponseEntity<String> deleteTweet(@PathVariable String username, @PathVariable String id) {
 		userService.isUserLoggedIn(username);
-		tweetProducer.sendMessage("[kafka]Tweet deleted -> " + username);
+		//tweetProducer.sendMessage("[kafka]Tweet deleted -> " + username);
 		return new ResponseEntity<>(service.deleteTweet(username,id),HttpStatus.NO_CONTENT);
 	}
 
